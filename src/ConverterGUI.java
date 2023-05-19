@@ -62,7 +62,7 @@ public class ConverterGUI {
 		
 		baseCurr.addItem("USD");
 		baseCurr.addItem("EUR");
-		baseCurr.addItem("GPB");
+		baseCurr.addItem("GBP");
 		baseCurr.addItem("JPY");
 		baseCurr.addItem("CAD");
 		baseCurr.addItem("AUD");
@@ -85,7 +85,7 @@ public class ConverterGUI {
 		
 		targetCurr.addItem("USD");
 		targetCurr.addItem("EUR");
-		targetCurr.addItem("GPB");
+		targetCurr.addItem("GBP");
 		targetCurr.addItem("JPY");
 		targetCurr.addItem("CAD");
 		targetCurr.addItem("AUD");
