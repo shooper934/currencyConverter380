@@ -14,6 +14,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.SoftBevelBorder;
+import java.awt.Cursor;
 
 public class ConverterGUI {
 
@@ -51,12 +57,17 @@ public class ConverterGUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
+		frame.getContentPane().setForeground(new Color(255, 255, 255));
 		frame.setBounds(400, 200, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null); 
 		
 		JComboBox baseCurr = new JComboBox();
-		baseCurr.setBounds(28, 89, 96, 21);
+		baseCurr.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		baseCurr.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		baseCurr.setBackground(new Color(255, 255, 255));
+		baseCurr.setBounds(28, 89, 96, 25);
 		frame.getContentPane().add(baseCurr);
 		
 		
@@ -73,13 +84,16 @@ public class ConverterGUI {
 		
 		
 		JLabel titleName = new JLabel("Currency Converter");
+		titleName.setBorder(null);
 		titleName.setFont(new Font("Times New Roman", Font.BOLD, 19));
 		titleName.setHorizontalAlignment(SwingConstants.CENTER);
-		titleName.setBounds(10, 10, 405, 25);
+		titleName.setBounds(115, 10, 202, 25);
 		frame.getContentPane().add(titleName);
 		
 		JComboBox targetCurr = new JComboBox();
-		targetCurr.setBounds(153, 89, 96, 21);
+		targetCurr.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		targetCurr.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		targetCurr.setBounds(153, 89, 96, 25);
 		frame.getContentPane().add(targetCurr);
 		
 		
@@ -96,6 +110,7 @@ public class ConverterGUI {
 		
 		
 		resultTextField = new JTextField();
+		resultTextField.setEditable(false);
 		resultTextField.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		resultTextField.setBounds(83, 166, 254, 59);
 		frame.getContentPane().add(resultTextField);
@@ -127,7 +142,8 @@ public class ConverterGUI {
 		frame.getContentPane().add(btnConvert);
 		
 		amountTextField = new JTextField();
-		amountTextField.setBorder(new LineBorder(new Color(171, 173, 179)));
+		amountTextField.setBackground(new Color(255, 255, 255));
+		amountTextField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		amountTextField.setBounds(286, 90, 96, 19);
 		frame.getContentPane().add(amountTextField);
 		amountTextField.setColumns(10);
