@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 
 public class APIconnection { 
         /*
@@ -34,6 +35,9 @@ public class APIconnection {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder response = new StringBuilder();
             String line;
+            
+            //format the result with this
+            DecimalFormat df = new DecimalFormat("#.00");
 
             while ((line = reader.readLine()) != null) {
                 response.append(line);
@@ -47,7 +51,7 @@ public class APIconnection {
             double targetRate = rates.getDouble(targetCurrency);
 
             double convertedAmount = (amount / sourceRate) * targetRate;
-            return amount + " " + sourceCurrency + " = " + convertedAmount + " " + targetCurrency;
+            return amount + " " + sourceCurrency + " = " + df.format(convertedAmount) + " " + targetCurrency;
         } catch (Exception e) {
             return e.getMessage();
         }	
