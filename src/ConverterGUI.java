@@ -59,7 +59,7 @@ public class ConverterGUI {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.getContentPane().setForeground(new Color(255, 255, 255));
-		frame.setBounds(400, 200, 450, 300);
+		frame.setBounds(400, 200, 450, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null); 
 		
@@ -157,6 +157,21 @@ public class ConverterGUI {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(83, 145, 254, 13);
 		frame.getContentPane().add(lblNewLabel);
+
+		// HARDCODED US > EURO conversions
+		String[][] data = {{"May 25, 2023", "0.93"},{"May 24, 2023", "0.93"},{"May 23, 2023", "0.93"},{"May 22, 2023", "0.92"},{"May 21, 2023", "0.92"},{"May 20, 2023", "0.92"},{"May 19, 2023", "0.92"} };
+
+		JButton btnTable = new JButton("Conversion History");
+		btnTable.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource()==btnTable) {
+					TableGUI tableGUI = new TableGUI(data);
+				}
+			}
+		});
+		btnTable.setBounds(134,270,150, 21);
+		frame.getContentPane().add(btnTable);
 		
 	}
 }
