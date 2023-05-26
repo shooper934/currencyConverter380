@@ -31,27 +31,9 @@ import javax.swing.JTextArea;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
 
-public class ConverterGUI {
+public class ConverterGUI extends DBConnection{
 	
-	public static Connection conn;
 	LocalDate currentDate = LocalDate.now();
-	
-	public static void connect() {
-
-		// Connect to the database ****Insert url, username, and password here************************************************
-		String url = "jdbc:mysql://localhost/conversionhistory";
-		String username = "root";
-		String password = "Y@maha700"; //********************************PASSWORD HERE***************
-	
-		try {
-			conn = DriverManager.getConnection(url, username, password);
-			System.out.println("connected");
-			
-			
-		}catch(Exception e) {
-			System.out.println("exception "+ e.getMessage());
-		}
-	}
 
 	private JFrame frame;
 	private JTextField resultTextField;
