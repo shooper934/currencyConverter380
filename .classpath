@@ -7,5 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/shoop/eclipse-workspace/CurrencyConverter/lib/json.jar"/>
+	<classpathentry kind="lib" path="C:/Users/shoop/OneDrive/Desktop/mysql-connector-j-8.0.33/mysql-connector-j-8.0.33.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

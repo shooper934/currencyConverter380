@@ -11,6 +11,10 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.border.BevelBorder;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
@@ -20,8 +24,29 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.Cursor;
+import java.time.LocalDate;
 
 public class ConverterGUI {
+	
+	public static Connection conn;
+	LocalDate currentDate = LocalDate.now();
+	
+	public static void connect() {
+
+		// Connect to the database ****Insert url, username, and password here************************************************
+		String url = "jdbc:mysql://localhost/conversionhistory";
+		String username = "root";
+		String password = ""; //********************************PASSWORD HERE***************
+	
+		try {
+			conn = DriverManager.getConnection(url, username, password);
+			System.out.println("connected");
+			
+			
+		}catch(Exception e) {
+			System.out.println("exception "+ e.getMessage());
+		}
+	}
 
 	private JFrame frame;
 	private JTextField resultTextField;
@@ -33,6 +58,9 @@ public class ConverterGUI {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
+		connect();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -126,16 +154,23 @@ public class ConverterGUI {
 		lblTarget.setBounds(177, 75, 45, 13);
 		frame.getContentPane().add(lblTarget);
 		
+		//save button
+		JButton btnSave = new JButton("Save");
+		
 		JButton btnConvert = new JButton("Convert");
 		btnConvert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				btnSave.setEnabled(true);
+				
 				try {
 					int intAmount = Integer.parseInt(amountTextField.getText());
 					resultTextField.setText(a.convert(baseCurr.getSelectedItem().toString(), targetCurr.getSelectedItem().toString(), intAmount));
 
 				} catch (NumberFormatException e11) {
 					resultTextField.setText("Please enter a valid number into the Amount box");
-				}								
+				}
+				
+				
 			}
 		});
 		btnConvert.setBounds(164, 235, 85, 21);
@@ -172,6 +207,36 @@ public class ConverterGUI {
 		});
 		btnTable.setBounds(134,270,150, 21);
 		frame.getContentPane().add(btnTable);
+		
+		
+		btnSave.setEnabled(false);
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				
+				//this will add data into db
+				if (e.getSource() == btnSave) {
+		            String insert = "INSERT INTO `conversionhistory`.`conversion_history` (`baseCurr`, `targetCurr`, `conAmount`, `date`) ";
+		            String values = "VALUES (" +
+		                            "'" + baseCurr.getSelectedItem().toString() + "', " +
+		                            "'" + targetCurr.getSelectedItem().toString() + "', " +
+		                            "'" + resultTextField.getText() + "', " +
+		                            "'" + currentDate.toString() + "');";
+		            String query = insert + values;
+
+		            try {
+		                Statement statement = conn.createStatement();
+		                statement.executeUpdate(query);
+		                System.out.println("conv added");
+		            } catch (SQLException e111) {
+		                System.out.println("SQL Exception: " + e111.getMessage());
+		                //output1.setText("Please insert correct values into the fields" + "\nor insert a StudentID that has not been used");
+		            }
+				}
+			  }
+		});
+		btnSave.setBounds(347, 185, 71, 21);
+		frame.getContentPane().add(btnSave);
 		
 	}
 }
