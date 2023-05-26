@@ -38,7 +38,6 @@ public class ConverterGUI extends DBConnection{
 	private JFrame frame;
 	private JTextField resultTextField;
 	//instance of APIConnection
-	APIconnection a = new APIconnection();
 	private JTextField amountTextField;
 
 	/**
@@ -151,7 +150,7 @@ public class ConverterGUI extends DBConnection{
 				
 				try {
 					int intAmount = Integer.parseInt(amountTextField.getText());
-					resultTextField.setText(a.convert(baseCurr.getSelectedItem().toString(), targetCurr.getSelectedItem().toString(), intAmount));
+					resultTextField.setText(convert(baseCurr.getSelectedItem().toString(), targetCurr.getSelectedItem().toString(), intAmount));
 
 				} catch (NumberFormatException e11) {
 					resultTextField.setText("Please enter a valid number into the Amount box");
