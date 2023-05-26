@@ -13,6 +13,7 @@ import javax.swing.border.BevelBorder;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.awt.event.ActionEvent;
@@ -25,6 +26,10 @@ import javax.swing.border.MatteBorder;
 import javax.swing.border.SoftBevelBorder;
 import java.awt.Cursor;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import java.awt.Dimension;
+import javax.swing.JScrollPane;
 
 public class ConverterGUI {
 	
@@ -36,7 +41,7 @@ public class ConverterGUI {
 		// Connect to the database ****Insert url, username, and password here************************************************
 		String url = "jdbc:mysql://localhost/conversionhistory";
 		String username = "root";
-		String password = ""; //********************************PASSWORD HERE***************
+		String password = "Y@maha700"; //********************************PASSWORD HERE***************
 	
 		try {
 			conn = DriverManager.getConnection(url, username, password);
@@ -196,7 +201,7 @@ public class ConverterGUI {
 		// HARDCODED US > EURO conversions
 		String[][] data = {{"May 25, 2023", "0.93"},{"May 24, 2023", "0.93"},{"May 23, 2023", "0.93"},{"May 22, 2023", "0.92"},{"May 21, 2023", "0.92"},{"May 20, 2023", "0.92"},{"May 19, 2023", "0.92"} };
 
-		JButton btnTable = new JButton("Conversion History");
+		JButton btnTable = new JButton("Graph");
 		btnTable.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -205,7 +210,7 @@ public class ConverterGUI {
 				}
 			}
 		});
-		btnTable.setBounds(134,270,150, 21);
+		btnTable.setBounds(96,270,96, 21);
 		frame.getContentPane().add(btnTable);
 		
 		
@@ -237,6 +242,43 @@ public class ConverterGUI {
 		});
 		btnSave.setBounds(347, 185, 71, 21);
 		frame.getContentPane().add(btnSave);
+		
+		JButton btnHistory = new JButton("History");
+		btnHistory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 JTextArea popUp = new JTextArea(); // Create a JTextArea with desired text
+				 //popUp.setPreferredSize(new Dimension(400, 300));
+	                popUp.setEditable(false); // Make the text area read-only
+	                
+	                //scroll pane for growing data
+	                JScrollPane scrollPane = new JScrollPane(popUp);
+	                scrollPane.setPreferredSize(new Dimension(400, 200));
+	                scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	                scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+	                
+	                String query = "select * from conversion_history";
+
+	                try {
+	                    Statement statement = conn.createStatement();
+	                    ResultSet result = statement.executeQuery(query);
+	                    
+
+	                    while (result.next()) {
+	                        popUp.setText(popUp.getText() + "\n" + result.getString("baseCurr") + " " + result.getString("targetCurr") + " " +
+	                                result.getString("conAmount") + " " +
+	                                "(" + result.getString("date") + ")" + "\n");
+	                    }
+	                } catch (SQLException throwables) {
+	                    throwables.printStackTrace();
+	                }
+
+	                JOptionPane.showMessageDialog(frame, scrollPane, "History", JOptionPane.INFORMATION_MESSAGE);
+	                // Show the JTextArea in a dialog box with a specified title and information message type
+			}
+		});
+		btnHistory.setBounds(221, 270, 96, 21);
+		frame.getContentPane().add(btnHistory);
 		
 	}
 }
