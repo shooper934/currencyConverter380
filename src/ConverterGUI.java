@@ -31,38 +31,27 @@ import javax.swing.JTextArea;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
 
-public class ConverterGUI extends DBConnection{
+
+public class ConverterGUI extends APIconnection{
 	
 	LocalDate currentDate = LocalDate.now();
-
 	private JFrame frame;
 	private JTextField resultTextField;
 	//instance of APIConnection
 	private JTextField amountTextField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		
-		connect();
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ConverterGUI window = new ConverterGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//instance of DBConnection
+	private static DBConnection db = new DBConnection();
+	
+	//method to get the frame for other classes
+	public JFrame getFrame() {
+        return frame;
+    }
 
 	/**
 	 * Create the application.
 	 */
 	public ConverterGUI() {
+		db.connect();
 		initialize();
 	}
 
@@ -211,7 +200,7 @@ public class ConverterGUI extends DBConnection{
 		            String query = insert + values;
 
 		            try {
-		                Statement statement = conn.createStatement();
+		                Statement statement = db.conn.createStatement();
 		                statement.executeUpdate(query);
 		                System.out.println("conv added");
 		            } catch (SQLException e111) {
@@ -241,7 +230,7 @@ public class ConverterGUI extends DBConnection{
 	                String query = "select * from conversion_history";
 
 	                try {
-	                    Statement statement = conn.createStatement();
+	                    Statement statement = db.conn.createStatement();
 	                    ResultSet result = statement.executeQuery(query);
 	                    
 

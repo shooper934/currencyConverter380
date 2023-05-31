@@ -6,12 +6,15 @@ import java.sql.Statement;
 
 public class DBConnection extends APIconnection {
     public static Connection conn;
+    
+    //instance of the InitialScreen
+    private static InitialScreen in = new InitialScreen();
 
     public static void connect() {
         // Connect to the database
         String url = "jdbc:mysql://localhost/";
-        String username = "root";
-        String password = "";
+        String username = in.getUsername();
+        String password = in.getPassword();
 
         try {
             conn = DriverManager.getConnection(url, username, password);
