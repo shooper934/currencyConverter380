@@ -41,6 +41,7 @@ public class InitialScreen {
     }
 
     private void initialize() {
+    	
         frame = new JFrame();
         frame.setBounds(400, 200, 300, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -72,6 +73,7 @@ public class InitialScreen {
         panel.add(lblHeader);
         
         usernameField = new JTextField();
+        usernameField.setText("root");
         usernameField.setBounds(94, 43, 106, 23);
         panel.add(usernameField);
         usernameField.setColumns(10);
