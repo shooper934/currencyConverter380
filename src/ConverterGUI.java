@@ -202,7 +202,7 @@ public class ConverterGUI extends DBConnection{
 				
 				//this will add data into db
 				if (e.getSource() == btnSave) {
-		            String insert = "INSERT INTO `conversionhistory`.`conversion_history` (`baseCurr`, `targetCurr`, `conAmount`, `date`) ";
+		            String insert = "INSERT INTO `conversion_history`.`conversion_history` (`baseCurr`, `targetCurr`, `conAmount`, `date`) ";
 		            String values = "VALUES (" +
 		                            "'" + baseCurr.getSelectedItem().toString() + "', " +
 		                            "'" + targetCurr.getSelectedItem().toString() + "', " +
