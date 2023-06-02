@@ -1,8 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DBConnection extends APIconnection {
     public static Connection conn;
@@ -58,6 +54,26 @@ public class DBConnection extends APIconnection {
             } else {
                 System.out.println("Table already exists.");
             }
+
+            // Check if historical table exists
+            String historicalQuery = "SHOW TABLES LIKE 'historical_data'";
+            ResultSet historicalResultSet = statement.executeQuery(historicalQuery);
+
+            if(!historicalResultSet.next()) {
+                // Historical data does not exist
+                String createHistoricalQuery = "CREATE TABLE historical_data ("
+                        + "his_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,"
+                        + "conAmount VARCHAR(45) NOT NULL,"
+                        + "date VARCHAR(45) NOT NULL"
+                        + ")";
+                statement.executeUpdate(createHistoricalQuery);
+                System.out.println("Historical Table created successfully.");
+            } else {
+                System.out.println("Historical Table already exists. Refreshing table.");
+                statement.executeUpdate("DELETE FROM `conversion_history`.`historical_data`");
+                statement.executeUpdate("ALTER TABLE `conversion_history`.`historical_data` AUTO_INCREMENT = 1");
+            }
+
 
             tableResultSet.close();
             statement.close();

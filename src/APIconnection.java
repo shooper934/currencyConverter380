@@ -57,4 +57,38 @@ public class APIconnection {
         }	
     	
     }
+
+    public static String historical(String sourceCurrency, String targetCurrency, double amount, String date) {
+        String apiKey = "b9e4dc9137fa4b27b376e1988f6980b5";
+
+        try {
+            URL url = new URL("https://openexchangerates.org/api/historical/" + date + ".json?app_id=" + apiKey);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+
+            //format the result with this
+            DecimalFormat df = new DecimalFormat("#.00");
+
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+
+            reader.close();
+            connection.disconnect();
+
+            JSONObject rates = new JSONObject(response.toString()).getJSONObject("rates");
+            double sourceRate = rates.getDouble(sourceCurrency);
+            double targetRate = rates.getDouble(targetCurrency);
+
+            double convertedAmount = (amount / sourceRate) * targetRate;
+            return amount + " " + sourceCurrency + " = " + df.format(convertedAmount) + " " + targetCurrency;
+        } catch (Exception e) {
+            return e.getMessage();
+
+        }
+    }
 }
