@@ -59,7 +59,7 @@ public class APIconnection {
     }
 
     public static String historical(String sourceCurrency, String targetCurrency, double amount, String date) {
-        String apiKey = "b9e4dc9137fa4b27b376e1988f6980b5";
+        String apiKey = "9189d01f18714a06bd93c2b96b931bdf";
 
         try {
             URL url = new URL("https://openexchangerates.org/api/historical/" + date + ".json?app_id=" + apiKey);
