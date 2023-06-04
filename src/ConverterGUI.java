@@ -153,6 +153,7 @@ public class ConverterGUI extends APIconnection{
 		frame.getContentPane().add(btnConvert);
 		
 		amountTextField = new JTextField();
+		amountTextField.setText("null");
 		amountTextField.setBackground(new Color(255, 255, 255));
 		amountTextField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		amountTextField.setBounds(286, 90, 96, 19);
@@ -175,7 +176,16 @@ public class ConverterGUI extends APIconnection{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource()==btnTable) {
-					TableGUI tableGUI = new TableGUI(db, baseCurr.getSelectedItem().toString(), targetCurr.getSelectedItem().toString(), Integer.parseInt(amountTextField.getText()));
+					
+					try {
+						TableGUI tableGUI = new TableGUI(db, baseCurr.getSelectedItem().toString(), targetCurr.getSelectedItem().toString(), Integer.parseInt(amountTextField.getText()));
+					}
+					catch(Exception q) {
+						System.out.println("Error: launching table");
+						String string = "Select currencies and enter an amount!";
+						resultTextField.setText(string);
+					}
+					
 				}
 			}
 		});
