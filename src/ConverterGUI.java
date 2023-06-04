@@ -113,6 +113,7 @@ public class ConverterGUI extends APIconnection{
 		
 		
 		resultTextField = new JTextField();
+		resultTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		resultTextField.setEditable(false);
 		resultTextField.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		resultTextField.setBounds(83, 166, 254, 59);
