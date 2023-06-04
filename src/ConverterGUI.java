@@ -169,15 +169,13 @@ public class ConverterGUI extends APIconnection{
 		lblNewLabel.setBounds(83, 145, 254, 13);
 		frame.getContentPane().add(lblNewLabel);
 
-		// HARDCODED US > EURO conversions
-		String[][] data = {{"May 25, 2023", "0.93"},{"May 24, 2023", "0.93"},{"May 23, 2023", "0.93"},{"May 22, 2023", "0.92"},{"May 21, 2023", "0.92"},{"May 20, 2023", "0.92"},{"May 19, 2023", "0.92"} };
 
 		JButton btnTable = new JButton("Graph");
 		btnTable.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource()==btnTable) {
-					TableGUI tableGUI = new TableGUI(data);
+					TableGUI tableGUI = new TableGUI(db, baseCurr.getSelectedItem().toString(), targetCurr.getSelectedItem().toString(), Integer.parseInt(amountTextField.getText()));
 				}
 			}
 		});
