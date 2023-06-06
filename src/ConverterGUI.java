@@ -180,6 +180,9 @@ public class ConverterGUI extends APIconnection{
 
 
 		JButton btnTable = new JButton("Compare");
+		btnTable.setEnabled(false);
+		if(saveValid)
+			btnTable.setEnabled(true);
 		btnTable.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnTable.addActionListener(new ActionListener() {
 			@Override
@@ -232,6 +235,9 @@ public class ConverterGUI extends APIconnection{
 		frame.getContentPane().add(btnSave);
 		
 		JButton btnHistory = new JButton("History");
+		btnHistory.setEnabled(false);
+		if(saveValid)
+			btnHistory.setEnabled(true);
 		btnHistory.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

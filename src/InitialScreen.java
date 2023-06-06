@@ -79,7 +79,7 @@ public class InitialScreen {
         btnOpenConverter.setBounds(72, 128, 140, 25);
         panel.add(btnOpenConverter);
         
-        JLabel lblHeader = new JLabel("MySQL Connection");
+        JLabel lblHeader = new JLabel("SQL Connection");
         lblHeader.setFont(new Font("Times New Roman", Font.BOLD, 20));
         lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
         lblHeader.setBounds(10, 10, 266, 23);
