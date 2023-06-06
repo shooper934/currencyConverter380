@@ -5,6 +5,7 @@ public class DBConnection extends APIconnection {
     
     //instance of the InitialScreen
     private static InitialScreen in = new InitialScreen();
+    private static ConverterGUI cg = new ConverterGUI();
 
     public static void connect() {
         // Connect to the database
@@ -13,7 +14,8 @@ public class DBConnection extends APIconnection {
         String password = in.getPassword();
 
         try {
-            conn = DriverManager.getConnection(url, username, password);
+            cg.saveValid = true;
+        	conn = DriverManager.getConnection(url, username, password);
             System.out.println("Connected");
 
             // Check if the schema exists
@@ -50,9 +52,9 @@ public class DBConnection extends APIconnection {
                         + "date VARCHAR(45) NOT NULL"
                         + ")";
                 statement.executeUpdate(createTableQuery);
-                System.out.println("Table created successfully.");
+                //System.out.println("Table created successfully.");
             } else {
-                System.out.println("Table already exists.");
+                //System.out.println("Table already exists.");
             }
 
             // Check if historical table exists
@@ -78,7 +80,9 @@ public class DBConnection extends APIconnection {
             tableResultSet.close();
             statement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+        	System.out.println("Incorrect username or password, MySQL not connected.");
+        	cg.saveValid = false;
+            //e.printStackTrace();
         }
     }
 }

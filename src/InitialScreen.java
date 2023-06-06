@@ -10,6 +10,10 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+import java.awt.Color;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 
 
 public class InitialScreen {
@@ -43,24 +47,33 @@ public class InitialScreen {
     private void initialize() {
     	
         frame = new JFrame();
+        frame.setAlwaysOnTop(true);
         frame.setBounds(400, 200, 300, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel();
+        panel.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+        panel.setBackground(new Color(234, 255, 255));
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(null);
 
         JButton btnOpenConverter = new JButton("Enter");
+        btnOpenConverter.setBackground(new Color(255, 255, 255));
         btnOpenConverter.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
         btnOpenConverter.setFont(new Font("Times New Roman", Font.BOLD, 18));
         btnOpenConverter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	
-            	username = usernameField.getText();
-            	password = passwordField.getText();
+            	try {	
+            		username = usernameField.getText();
+            		password = passwordField.getText();
             	
-                frame.dispose(); // Close the initial screen
-                openConverterGUI(); // Open the ConverterGUI
+            		frame.dispose(); // Close the initial screen
+            		openConverterGUI(); // Open the ConverterGUI
+            	}
+            	catch(Exception e1){
+            		System.out.println("Incorrect username or password, MySQL not connected.");
+            	}
             }
         });
         btnOpenConverter.setBounds(72, 128, 140, 25);
@@ -69,10 +82,12 @@ public class InitialScreen {
         JLabel lblHeader = new JLabel("MySQL Connection");
         lblHeader.setFont(new Font("Times New Roman", Font.BOLD, 20));
         lblHeader.setHorizontalAlignment(SwingConstants.CENTER);
-        lblHeader.setBounds(10, 0, 266, 23);
+        lblHeader.setBounds(10, 10, 266, 23);
         panel.add(lblHeader);
         
         usernameField = new JTextField();
+        usernameField.setBorder(new LineBorder(new Color(171, 173, 179)));
+        usernameField.setBackground(new Color(255, 255, 255));
         usernameField.setText("root");
         usernameField.setBounds(94, 43, 106, 23);
         panel.add(usernameField);
@@ -84,6 +99,8 @@ public class InitialScreen {
         panel.add(lblUsername);
         
         passwordField = new JTextField();
+        passwordField.setBorder(new LineBorder(new Color(171, 173, 179)));
+        passwordField.setBackground(new Color(255, 255, 255));
         passwordField.setColumns(10);
         passwordField.setBounds(94, 80, 106, 23);
         panel.add(passwordField);

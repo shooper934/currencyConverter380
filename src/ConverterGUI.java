@@ -37,11 +37,13 @@ public class ConverterGUI extends APIconnection{
 	LocalDate currentDate = LocalDate.now();
 	private JFrame frame;
 	private JTextField resultTextField;
-	//instance of APIConnection
 	private JTextField amountTextField;
+	
+	//golabal boolean to prevent errors
+	public static boolean saveValid = false;
+	
 	//instance of DBConnection
 	private static DBConnection db = new DBConnection();
-	
 	//method to get the frame for other classes
 	public JFrame getFrame() {
         return frame;
@@ -51,7 +53,11 @@ public class ConverterGUI extends APIconnection{
 	 * Create the application.
 	 */
 	public ConverterGUI() {
+		
 		db.connect();
+		
+		
+			
 		initialize();
 	}
 
@@ -90,7 +96,7 @@ public class ConverterGUI extends APIconnection{
 		titleName.setBorder(null);
 		titleName.setFont(new Font("Times New Roman", Font.BOLD, 19));
 		titleName.setHorizontalAlignment(SwingConstants.CENTER);
-		titleName.setBounds(115, 10, 202, 25);
+		titleName.setBounds(115, 22, 202, 25);
 		frame.getContentPane().add(titleName);
 		
 		JComboBox targetCurr = new JComboBox();
@@ -115,7 +121,7 @@ public class ConverterGUI extends APIconnection{
 		resultTextField = new JTextField();
 		resultTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		resultTextField.setEditable(false);
-		resultTextField.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		resultTextField.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		resultTextField.setBounds(83, 166, 254, 59);
 		frame.getContentPane().add(resultTextField);
 		resultTextField.setColumns(10);
@@ -132,11 +138,14 @@ public class ConverterGUI extends APIconnection{
 		
 		//save button
 		JButton btnSave = new JButton("Save");
+		btnSave.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
 		JButton btnConvert = new JButton("Convert");
+		btnConvert.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnConvert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnSave.setEnabled(true);
+				if(saveValid)
+					btnSave.setEnabled(true);
 				
 				try {
 					int intAmount = Integer.parseInt(amountTextField.getText());
@@ -153,7 +162,6 @@ public class ConverterGUI extends APIconnection{
 		frame.getContentPane().add(btnConvert);
 		
 		amountTextField = new JTextField();
-		amountTextField.setText("null");
 		amountTextField.setBackground(new Color(255, 255, 255));
 		amountTextField.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		amountTextField.setBounds(286, 90, 96, 19);
@@ -171,7 +179,8 @@ public class ConverterGUI extends APIconnection{
 		frame.getContentPane().add(lblNewLabel);
 
 
-		JButton btnTable = new JButton("Graph");
+		JButton btnTable = new JButton("Compare");
+		btnTable.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnTable.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -213,8 +222,8 @@ public class ConverterGUI extends APIconnection{
 		                statement.executeUpdate(query);
 		                System.out.println("conv added");
 		            } catch (SQLException e111) {
-		                System.out.println("SQL Exception: " + e111.getMessage());
-		                //output1.setText("Please insert correct values into the fields" + "\nor insert a StudentID that has not been used");
+		                System.out.println("MySQL not connected.");
+		                resultTextField.setText("No MySQL connection");
 		            }
 				}
 			  }
@@ -223,6 +232,7 @@ public class ConverterGUI extends APIconnection{
 		frame.getContentPane().add(btnSave);
 		
 		JButton btnHistory = new JButton("History");
+		btnHistory.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		btnHistory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 JTextArea popUp = new JTextArea(); // Create a JTextArea with desired text
